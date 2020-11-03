@@ -12,6 +12,8 @@ public class Mypage {
         private Long id;
         private Long orderId;
         private Long customerId;
+        private Long bookId;
+        private Long qty;
         private String status;
 
 
@@ -43,5 +45,19 @@ public class Mypage {
         public void setStatus(String status) {
             this.status = status;
         }
+        public Long getBookId() {
+            return bookId;
+        }
 
+        public void setBookId(Long bookId) {
+            this.bookId = bookId;
+        }
+
+        public Long getQty() {
+            return qty;
+        }
+
+        public void setQty(Long qty) {
+            this.qty = qty;
+        }
 }

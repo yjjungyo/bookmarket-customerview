@@ -24,6 +24,10 @@ public class MypageViewHandler {
                 // view 객체 생성
                 Mypage mypage = new Mypage();
                 // view 객체에 이벤트의 Value 를 set 함
+                mypage.setOrderId(ordered.getId());
+                mypage.setCustomerId(ordered.getCustomerId());
+                mypage.setBookId(ordered.getBookId());
+                mypage.setQty(ordered.getQty());
                 mypage.setStatus(ordered.getStatus());
                 // view 레파지 토리에 save
                 mypageRepository.save(mypage);
