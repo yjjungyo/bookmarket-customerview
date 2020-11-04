@@ -22,26 +22,28 @@ public class MypageViewHandler {
         try {
             if (ordered.isMe()) {
                 // view 객체 생성
-                Mypage mypage = new Mypage();
+                //Mypage mypage = new Mypage();
                 // view 객체에 이벤트의 Value 를 set 함
-                mypage.setOrderId(ordered.getId());
-                mypage.setCustomerId(ordered.getCustomerId());
-                mypage.setBookId(ordered.getBookId());
-                mypage.setQty(ordered.getQty());
-                mypage.setStatus(ordered.getStatus());
-                // view 레파지 토리에 save
-                mypageRepository.save(mypage);
+                List<Mypage> mypageList = mypageRepository.findByOrderId(ordered.getId());
+                for(Mypage mypage : mypageList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set
+                    mypage.setCustomerId(ordered.getCustomerId());
+                    mypage.setBookId(ordered.getBookId());
+                    mypage.setQty(ordered.getQty());
+                    // view 레파지 토리에 save
+                    mypageRepository.save(mypage);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-
+/*
     @StreamListener(KafkaProcessor.INPUT)
     public void whenOrderCanceled_then_UPDATE_1(@Payload OrderCanceled orderCanceled) {
         try {
-            if (orderCanceled.isMe()) {
+            if (orderCanceled.isMe() && orderCanceled.getStatus().equals("OrderCanceled")) {
                 // view 객체 조회
                 List<Mypage> mypageList = mypageRepository.findByOrderId(orderCanceled.getId());
                 for(Mypage mypage : mypageList){
@@ -55,11 +57,13 @@ public class MypageViewHandler {
             e.printStackTrace();
         }
     }
+    */
     @StreamListener(KafkaProcessor.INPUT)
     public void whenPaid_then_UPDATE_2(@Payload Paid paid) {
         try {
-            if (paid.isMe()) {
+            if (paid.isMe()&&paid.getStatus().equals("Ordered")) {
                 // view 객체 조회
+                /*
                 List<Mypage> mypageList = mypageRepository.findByOrderId(paid.getOrderId());
                 for(Mypage mypage : mypageList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
@@ -67,11 +71,20 @@ public class MypageViewHandler {
                     // view 레파지 토리에 save
                     mypageRepository.save(mypage);
                 }
+                */
+                // view 객체 생성
+                Mypage mypage = new Mypage();
+                // view 객체에 이벤트의 Value 를 set 함
+                mypage.setOrderId(paid.getOrderId());
+                mypage.setStatus(paid.getStatus());
+                // view 레파지 토리에 save
+                mypageRepository.save(mypage);
             }
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+    /*
     @StreamListener(KafkaProcessor.INPUT)
     public void whenPayCanceled_then_UPDATE_3(@Payload PayCanceled payCanceled) {
         try {
@@ -89,6 +102,7 @@ public class MypageViewHandler {
             e.printStackTrace();
         }
     }
+    */
     @StreamListener(KafkaProcessor.INPUT)
     public void whenShipped_then_UPDATE_4(@Payload Shipped shipped) {
         try {
