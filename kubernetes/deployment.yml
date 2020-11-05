@@ -10,7 +10,7 @@ spec:
     matchLabels:     
       app: customerview
   template:
-    metadata:
+    metadata:   
       labels:
         app: customerview
     spec:
