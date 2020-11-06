@@ -14,6 +14,7 @@ public class Mypage {
         private Long customerId;
         private Long bookId;
         private Long qty;
+        private Long messageId;
         private String status;
 
 
@@ -60,4 +61,12 @@ public class Mypage {
         public void setQty(Long qty) {
             this.qty = qty;
         }
+        
+        public Long getMessageId() {
+        return messageId;
+    }
+
+        public void setMessageId(Long messageId) {
+        this.messageId = messageId;
+    }
 }
